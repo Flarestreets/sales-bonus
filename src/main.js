@@ -107,7 +107,7 @@ if (
         record.items.forEach(item => {
             const product = productIndex[item.sku]; // Товар
             const cost = (product.purchase_price ?? 0) * item.quantity; // Посчитать себестоимость (cost) товара как product.purchase_price, умноженную на количество товаров из чека
-            const revenue = calculateRevenue(item) ?? 0;// Посчитать выручку (revenue) с учётом скидки через функцию calculateRevenue
+            const revenue = calculateRevenue(item, product) ?? 0;// Посчитать выручку (revenue) с учётом скидки через функцию calculateRevenue
             const profit = revenue - cost; // Посчитать прибыль: выручка минус себестоимость
             seller.profit += profit; // Увеличить общую накопленную прибыль (profit) у продавца  
 
@@ -125,7 +125,7 @@ if (
 // Назначение премий на основе ранжирования
 
    sellerStats.forEach((seller, index) => {
-        seller.bonus = calculateBonusByProfit(index, sellerStats.length, seller);  // расчет бонуса
+        seller.bonus = calculateBonus(index, sellerStats.length, seller);  // расчет бонуса
         seller.top_products = Object.entries(seller.products_sold)
         .map(([sku, quantity]) => ({ sku, quantity }))                 
         .sort((a, b) => b.quantity - a.quantity)                      
