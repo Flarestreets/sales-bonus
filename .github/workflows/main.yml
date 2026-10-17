@@ -1,3 +1,9 @@
+
+- name: Check Practicum endpoint
+  run: |
+    curl -v --connect-timeout 5 --max-time 15 \
+      https://stub.practicum-team.ru/api/sp5_etl/sales_etalon.js
+
 name: Tests
 
 on:
